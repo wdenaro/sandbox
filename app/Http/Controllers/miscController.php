@@ -122,11 +122,8 @@ class miscController extends Controller
 
     public function editor() {
 
-        DB::table('common_log')->insert(
-            ['notes' => 'foo', 'entry' => 'bar']
-        );
-
         return view('test-edit-page');
+
     }
 
 

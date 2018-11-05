@@ -21,9 +21,25 @@
                 font-weight: 200;
                 margin: 20px;
             }
+
+            #status {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 10px;
+                height: 10px;
+                background-color: greenyellow;
+            }
+
+            #status.busy {
+                background-color: red;
+            }
+
         </style>
     </head>
     <body>
+
+        <div id="status"></div>
 
         <h1>Test Edit Page</h1>
 
@@ -37,7 +53,13 @@
 
         $('#edit-me').on('blur', function() {
 
-            $.post( "process-edit/", { _token: '{{csrf_token()}}', notes: $(this).text(), entry: "2pm" } );
+            $('#status').addClass('busy');
+
+            $.post( "process-edit/",
+                { _token: '{{csrf_token()}}', notes: $(this).text(), entry: "2pm" },
+                function() {
+                    $('#status').removeClass('busy');
+                });
 
         })
 
