@@ -44,22 +44,26 @@
         <h1>Test Edit Page</h1>
 
         <div class="module">
-            <p><span id="edit-me" style="color: #cc0000; font-weight: bold;" contenteditable="true">Lorem Ipsum is simply dummy text</span> of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            <p><span class="editable" style="color:#cc0000; font-weight:bold;" contenteditable="true" data-name="bodycontent1">Lorem Ipsum is simply dummy text</span> <span class="editable" style="color:#636b6f;" contenteditable="true" data-name="bodycontent2">of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>
         </div>
 
     <script>
 
     $(function() {
 
-        $('#edit-me').on('blur', function() {
+        $('.editable').on('blur', function() {
 
             $('#status').addClass('busy');
 
-            $.post( "process-edit/",
-                { _token: '{{csrf_token()}}', notes: $(this).text(), entry: "2pm" },
-                function() {
+            $.ajax({
+                method: "POST",
+                url: "process-edit/",
+                data: {_token: '{{csrf_token()}}', notes: $(this).text(), entry: $(this).attr('data-name')},
+                dataType: 'json'})
+                .done(function() {
                     $('#status').removeClass('busy');
-                });
+            })
+
 
         })
 
