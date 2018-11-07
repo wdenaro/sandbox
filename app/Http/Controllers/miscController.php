@@ -130,9 +130,10 @@ class miscController extends Controller
 
     public function process_edit(Request $request) {
 
-        DB::table('common_log')->insert(
-            ['notes' => $request->notes, 'entry' => $request->entry]
-        );
+        DB::table('common_log')
+            ->insert(['notes' => $request->notes,
+                'entry' => $request->entry
+            ]);
 
         $response = array(
             'status' => 'success'
