@@ -60,8 +60,9 @@
                 url: "process-edit/",
                 data: {_token: '{{csrf_token()}}', notes: $(this).text(), entry: $(this).attr('data-name')},
                 dataType: 'json'})
-                .done(function() {
+                .done(function(response) {
                     $('#status').removeClass('busy');
+                    console.log(response.status);
             })
 
 
